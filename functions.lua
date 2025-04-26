@@ -33,5 +33,17 @@ end
 
 local s2 = single_string_function("string function")
 -- if the next line did not have () it would be the same as the previous line
-local s1 = single_string_function("string function")
+local s1 = single_string_function "string function"
 print(s2, s1)
+
+-- You can do similarly with tables
+local setup = function(opts)
+	if opts.defaults == nil then
+		opts.defaults = 18
+	end
+
+	print(opts.defaults, opts.other)
+end
+
+setup({ default = 12, other = false })
+setup { other = true }
