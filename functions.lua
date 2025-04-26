@@ -45,5 +45,39 @@ local setup = function(opts)
 	print(opts.defaults, opts.other)
 end
 
+-- Both of these examples work the same
 setup({ default = 12, other = false })
 setup { other = true }
+
+local myTable = {}
+
+-- the next 2 lines are exactly the same
+function myTable.something(self, ...) end
+
+function myTable:something_with_self_included(...) end
+
+-- meta tables and meta methods
+local vector_mt = {}
+
+-- _add is a meta method, think of it like a self defined implementation of a specific operator
+vector_mt.__add = function(left, right)
+	return setmetatable({
+		left[1] + right[1],
+		left[2] + right[2],
+		left[3] + right[3],
+	}, vector_mt)
+end
+
+local v1 = setmetatable({ 3, 1, 5 }, vector_mt)
+local v2 = setmetatable({ 4, -43, 2 }, vector_mt)
+local v3 = v1 + v2
+
+print(v3[1], v3[2], v3[3])
+print(v3)
+
+-- Output:
+-- 7
+-- -42
+-- 7
+-- 14, -84, 14
+--
