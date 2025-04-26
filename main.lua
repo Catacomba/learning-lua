@@ -6,5 +6,3 @@ M.some_function_in_module = function()
 	print("I am a function in module M")
 end
 return M
-
--- Function have multiple return values
